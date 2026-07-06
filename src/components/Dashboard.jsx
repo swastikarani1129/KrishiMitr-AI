@@ -2,7 +2,6 @@ import React from 'react';
 import { getTranslation } from '../services/translations';
 import { db } from '../services/db';
 
-// Custom SVG Icons for Crops
 export const CropIcon = ({ name, size = 32 }) => {
   switch (name) {
     case 'Wheat':
@@ -65,24 +64,91 @@ export const CropIcon = ({ name, size = 32 }) => {
 
 export default function Dashboard({ lang, onViewCrop, onNavigate }) {
   const crops = db.getCropSeasons();
-  
-  // Calculate total stats
+  const reminders = db.getReminders();
+  const soilTests = db.getSoilTests();
+  const diseases = db.getAllDiseaseHistory();
+
+  // Financial Stats
   let totalIncome = 0;
   let totalExpenses = 0;
-
   crops.forEach(crop => {
     const stats = db.getCropStats(crop.id);
     totalIncome += stats.income;
     totalExpenses += stats.expense;
   });
-
   const netProfit = totalIncome - totalExpenses;
+
+  // Active vs Harvested
   const activeCrops = crops.filter(c => c.status === 'active');
   const harvestedCrops = crops.filter(c => c.status === 'harvested');
 
+  // Reminders Filter
+  const pendingReminders = reminders.filter(r => r.status === 'pending');
+  const criticalRemindersCount = pendingReminders.filter(r => {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const due = new Date(r.date);
+    due.setHours(0,0,0,0);
+    return due <= today; // Overdue or today
+  }).length;
+
+  // Soil health
+  const activeSoilReport = soilTests[0] || null;
+
+  // Recent diseases (last 15 days)
+  const activeDiseaseAlerts = diseases.filter(d => {
+    const diff = (new Date() - new Date(d.created_at)) / (1000 * 60 * 60 * 24);
+    return diff <= 15;
+  });
+
+  // Calculate crop profits for comparison charts
+  const cropProfits = crops.map(crop => {
+    const stats = db.getCropStats(crop.id);
+    return {
+      id: crop.id,
+      name: crop.crop_name,
+      profit: stats.profit
+    };
+  });
+
+  // Find max profit for bar scaling
+  const maxProfit = Math.max(...cropProfits.map(c => Math.abs(c.profit)), 1000);
+
   return (
     <div className="dashboard-view animate-fade-in">
-      {/* Financial Summary Cards */}
+      {/* 1. Active Reminders Ticker alert */}
+      {pendingReminders.length > 0 && (
+        <div 
+          className={`reminders-ticker-banner ${criticalRemindersCount > 0 ? 'critical-bg' : 'normal-bg'}`}
+          onClick={() => onNavigate('reminders')}
+        >
+          <div className="ticker-icon">🔔</div>
+          <div className="ticker-text">
+            {criticalRemindersCount > 0 ? (
+              <strong>{criticalRemindersCount} {getTranslation(lang, 'overdue')} task(s) need attention!</strong>
+            ) : (
+              <span>You have {pendingReminders.length} upcoming farm tasks.</span>
+            )}
+          </div>
+          <span className="ticker-arrow">→</span>
+        </div>
+      )}
+
+      {/* 2. Visual Disease Infection Warning Banner */}
+      {activeDiseaseAlerts.length > 0 && (
+        <div 
+          className="disease-ticker-banner"
+          onClick={() => onNavigate('disease')}
+        >
+          <div className="ticker-icon">🦠</div>
+          <div className="ticker-text">
+            <strong>{activeDiseaseAlerts[0].disease_name}</strong> detected on wheat! View treatment tips.
+          </div>
+          <span className="ticker-arrow">→</span>
+        </div>
+      )}
+
+      {/* Financial Summary Card */}
       <div className="summary-cards">
         <div className={`card net-card ${netProfit >= 0 ? 'profit-bg' : 'loss-bg'}`}>
           <div className="card-label">
@@ -93,12 +159,12 @@ export default function Dashboard({ lang, onViewCrop, onNavigate }) {
           </div>
           <div className="card-indicator-icon">
             {netProfit >= 0 ? (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                 <line x1="12" y1="19" x2="12" y2="5"></line>
                 <polyline points="5 12 12 5 19 12"></polyline>
               </svg>
             ) : (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <polyline points="19 12 12 19 5 12"></polyline>
               </svg>
@@ -122,7 +188,22 @@ export default function Dashboard({ lang, onViewCrop, onNavigate }) {
         </div>
       </div>
 
-      {/* Main Actions for easy layout */}
+      {/* 3. Soil Health Summary panel */}
+      {activeSoilReport && (
+        <div className="soil-quick-status card" onClick={() => onNavigate('soil')}>
+          <div className="quick-soil-header">
+            <span>🔬 {getTranslation(lang, 'soilStatus')} ({activeSoilReport.field_name})</span>
+            <span className={`soil-dot-indicator ${activeSoilReport.nitrogen === 'low' ? 'deficit' : 'healthy'}`}></span>
+          </div>
+          <p className="soil-quick-recommendation">
+            {activeSoilReport.nitrogen === 'low' 
+              ? "Nitrogen levels are low. Advisory: Top dress Urea fertilizer."
+              : "Soil pH and nutrient cycles are optimal."}
+          </p>
+        </div>
+      )}
+
+      {/* Main Action Shortcuts */}
       <div className="dashboard-actions">
         <button className="primary-action-btn pulse-btn" onClick={() => onNavigate('voice')}>
           <div className="btn-icon-wrapper">
@@ -137,7 +218,7 @@ export default function Dashboard({ lang, onViewCrop, onNavigate }) {
 
         <button className="secondary-action-btn" onClick={() => onNavigate('add-tx')}>
           <div className="btn-icon-wrapper">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <line x1="12" y1="5" x2="12" y2="19"></line>
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
@@ -146,7 +227,33 @@ export default function Dashboard({ lang, onViewCrop, onNavigate }) {
         </button>
       </div>
 
-      {/* Active Crop Seasons */}
+      {/* 4. Crop Profit Comparison Chart (Analytics) */}
+      {crops.length > 0 && (
+        <div className="analytics-comparison-card card">
+          <h3>📊 Crop Profit Comparison</h3>
+          <div className="profit-bar-chart">
+            {cropProfits.map(cp => {
+              const percentage = (Math.abs(cp.profit) / maxProfit) * 100;
+              const isProfit = cp.profit >= 0;
+              return (
+                <div key={cp.id} className="chart-row">
+                  <span className="chart-crop-name">{getTranslation(lang, cp.name)}</span>
+                  <div className="chart-bar-wrapper">
+                    <div 
+                      className={`chart-bar-fill ${isProfit ? 'profit-bar' : 'loss-bar'}`}
+                      style={{ width: `${percentage}%` }}
+                    >
+                      <span className="bar-value">₹{cp.profit.toLocaleString('en-IN')}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Active Crop Seasons List */}
       <div className="crops-section">
         <div className="section-header">
           <h2>{getTranslation(lang, 'activeCrops')}</h2>
@@ -193,7 +300,7 @@ export default function Dashboard({ lang, onViewCrop, onNavigate }) {
         )}
       </div>
 
-      {/* Harvested Crop Seasons */}
+      {/* Harvested Crop Seasons List */}
       {harvestedCrops.length > 0 && (
         <div className="crops-section harvested-section">
           <div className="section-header">

@@ -1367,3 +1367,1077 @@ body {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
+
+/* --- NEW COMPONENT STYLES --- */
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 100;
+  padding: 0;
+}
+
+.modal-content {
+  background-color: white;
+  width: 100%;
+  max-width: 480px;
+  border-top-left-radius: var(--border-radius-lg);
+  border-top-right-radius: var(--border-radius-lg);
+  padding: 24px 20px;
+  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.15);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.close-modal-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-light);
+  padding: 4px;
+}
+
+/* Tabs */
+.tab-navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #cbd5e1;
+  padding: 4px;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 16px;
+}
+
+.tab-btn {
+  padding: 10px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+  background-color: white;
+  color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Reminders Ticker */
+.reminders-ticker-banner {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.reminders-ticker-banner.critical-bg {
+  background-color: var(--loss-bg);
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+
+.reminders-ticker-banner.normal-bg {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.ticker-icon {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.ticker-text {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.ticker-arrow {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+/* Disease Ticker */
+.disease-ticker-banner {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Leaf Disease Scanner Viewport */
+.leaf-display-viewport {
+  position: relative;
+  background-color: #f8fafc;
+  height: 200px;
+  border-radius: var(--border-radius-md);
+  border: 2px dashed #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.empty-leaf-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-light);
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.leaf-preset-graphic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.uploaded-leaf-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Laser Scanner Animations */
+.laser-scanner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 81, 50, 0.15);
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.laser-scanner-overlay .scanner-text {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  z-index: 10;
+}
+
+.laser-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background-color: var(--accent-color);
+  box-shadow: 0 0 15px var(--accent-color), 0 0 30px var(--accent-color);
+  animation: scan-up-down 2.2s infinite ease-in-out;
+}
+
+@keyframes scan-up-down {
+  0% { top: 0%; }
+  50% { top: 100%; }
+  100% { top: 0%; }
+}
+
+.upload-actions-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.upload-file-btn {
+  flex: 1;
+  background-color: white;
+  border: 2px solid #cbd5e1;
+  border-radius: var(--border-radius-md);
+  padding: 14px;
+  text-align: center;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-file-btn input[type="file"] {
+  display: none;
+}
+
+.scan-action-btn {
+  flex: 1.2;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Presets leaf list */
+.presets-block {
+  margin-top: 16px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 14px;
+}
+
+.preset-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-light);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.presets-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.preset-btn-tile {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left-width: 5px;
+  padding: 10px 8px;
+  border-radius: 8px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.preset-btn-tile.active {
+  background-color: #f0fdf4;
+  border-color: #86efac;
+}
+
+/* Diagnosis report details card */
+.diagnosis-report {
+  border-top: 5px solid;
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 12px;
+}
+
+.report-header h3 {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.confidence-badge {
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.report-body {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.report-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.report-body p {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-dark);
+}
+
+.treatment-text {
+  font-weight: 700;
+  color: var(--primary-color);
+  background-color: var(--primary-light);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.alert-box-warning {
+  background-color: #fffbeb;
+  border: 1px solid #fef3c7;
+  color: #b45309;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.save-to-crop-section {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 14px;
+}
+
+.confirm-btn-full {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 16px;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.disease-log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.disease-log-card {
+  border-left: 5px solid;
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.log-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.log-meta {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.log-body p {
+  font-size: 12px;
+  line-height: 1.35;
+  margin-top: 4px;
+}
+
+.treatment-box {
+  background-color: #f1f5f9;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-top: 6px;
+}
+
+/* Soil health styles */
+.soil-header-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.soil-avatar {
+  background-color: #fef3c7;
+  color: var(--amber-color);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.soil-date-stamp {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.retest-status-badge {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  background-color: #f1f5f9;
+  color: var(--text-light);
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+/* Soil Metrics circle gauges */
+.ph-meter-block {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.ph-gauge-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-light);
+  text-transform: uppercase;
+}
+
+.ph-gauge-value {
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-top: 4px;
+}
+
+.ph-visual-slider {
+  position: relative;
+  height: 8px;
+  margin: 14px 20px 8px 20px;
+}
+
+.ph-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #ef4444, #eab308, #22c55e, #3b82f6);
+}
+
+.ph-indicator-pin {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: white;
+  border: 3px solid var(--text-dark);
+  top: -4px;
+  transform: translateX(-50%);
+  z-index: 2;
+  box-shadow: var(--shadow-sm);
+}
+
+.ph-endpoints {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.divider-line {
+  height: 1px;
+  background-color: #f1f5f9;
+  margin: 16px 0;
+}
+
+.nutrients-grid-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.nutrient-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8fafc;
+  padding: 10px 14px;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid #f1f5f9;
+}
+
+.nutrient-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.nutrient-badge {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+.nutrient-badge.low-color {
+  background-color: var(--loss-bg);
+  color: var(--loss-color);
+}
+
+.nutrient-badge.med-color {
+  background-color: var(--amber-bg);
+  color: var(--amber-color);
+}
+
+.nutrient-badge.high-color {
+  background-color: var(--profit-bg);
+  color: var(--profit-color);
+}
+
+/* Soil advice recommendations */
+.advice-card {
+  border-left: 5px solid var(--accent-color);
+}
+
+.advice-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+
+.soil-advice-text {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-dark);
+}
+
+.soil-tests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.soil-test-itemcard {
+  padding: 14px;
+}
+
+.test-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.test-header h4 {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.test-date {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.test-brief-stats {
+  display: flex;
+  gap: 14px;
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+.test-brief-stats strong {
+  color: var(--text-dark);
+}
+
+/* pH Stepper elements */
+.ph-stepper-container {
+  display: flex;
+  align-items: center;
+  background-color: #f8fafc;
+  border: 2px solid #cbd5e1;
+  border-radius: var(--border-radius-md);
+  padding: 4px;
+}
+
+.ph-step-btn {
+  border: none;
+  font-size: 16px;
+  font-weight: 800;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.ph-step-btn.minus {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.ph-step-btn.plus {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.ph-stepper-value {
+  flex: 1;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.nutrient-select-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.nutrient-select-btn {
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  background-color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 11px;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.nutrient-select-btn.selected.low {
+  background-color: var(--loss-bg);
+  border-color: var(--loss-color);
+  color: var(--loss-color);
+}
+
+.nutrient-select-btn.selected.medium {
+  background-color: var(--amber-bg);
+  border-color: var(--amber-color);
+  color: var(--amber-color);
+}
+
+.nutrient-select-btn.selected.high {
+  background-color: var(--profit-bg);
+  border-color: var(--profit-color);
+  color: var(--profit-color);
+}
+
+/* Reminders view elements */
+.reminder-item-card {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+}
+
+.reminder-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reminder-check-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.checkbox-ring {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2.5px solid #94a3b8;
+  transition: all 0.15s ease;
+}
+
+.checkbox-ring:hover {
+  border-color: var(--primary-color);
+  background-color: var(--primary-light);
+}
+
+.reminder-icon-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reminder-icon-circle.greyed {
+  background-color: #e2e8f0;
+}
+
+.reminder-content {
+  flex: 1;
+  padding: 0 10px;
+  min-width: 0;
+}
+
+.reminder-task-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reminder-task-title.line-through {
+  text-decoration: line-through;
+  color: var(--text-light);
+}
+
+.reminder-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.reminder-crop-tag {
+  font-size: 9px;
+  font-weight: 700;
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.reminder-date-tag {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.countdown-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 12px;
+  margin-right: 6px;
+  white-space: nowrap;
+}
+
+.countdown-badge.overdue-badge {
+  background-color: var(--loss-bg);
+  color: var(--loss-color);
+}
+
+.countdown-badge.today-badge {
+  background-color: var(--amber-bg);
+  color: var(--amber-color);
+}
+
+.countdown-badge.upcoming-badge {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.completed-check-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--profit-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.completed-date-stamp {
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+.completed-bg {
+  background-color: #f8fafc;
+}
+
+.opacity-70 {
+  opacity: 0.75;
+}
+
+/* Marketplace styles */
+.listings-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.listing-card {
+  padding: 16px;
+}
+
+.listing-card.my-border {
+  border-left: 5px solid var(--primary-color);
+}
+
+.listing-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.listing-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.listing-date {
+  font-size: 10px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.listing-total-value {
+  margin-left: auto;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--primary-color);
+}
+
+.listing-details-row {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+
+.listing-location {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.listing-desc {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-light);
+  background-color: #f8fafc;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.seller-name-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.contact-farmer-btn {
+  width: 100%;
+  background-color: var(--profit-color);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: var(--border-radius-md);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.post-listing-btn {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 16px;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.contact-drawer {
+  text-align: center;
+}
+
+.seller-avatar-large {
+  font-size: 40px;
+  background-color: #f1f5f9;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px auto;
+}
+
+.seller-phone {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-top: 4px;
+}
+
+.contact-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.contact-action-link {
+  display: block;
+  text-decoration: none;
+  padding: 14px;
+  border-radius: var(--border-radius-md);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.contact-action-link.call {
+  background-color: #cbd5e1;
+  color: var(--text-dark);
+}
+
+.contact-action-link.whatsapp {
+  background-color: #25d366;
+  color: white;
+}
+
+/* Analytics Graph Styles */
+.analytics-comparison-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.profit-bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chart-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chart-crop-name {
+  font-size: 12px;
+  font-weight: 700;
+  width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chart-bar-wrapper {
+  flex: 1;
+  background-color: #f1f5f9;
+  height: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.chart-bar-fill {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  border-radius: 12px;
+  transition: width 0.5s ease-out;
+}
+
+.chart-bar-fill.profit-bar {
+  background: linear-gradient(to right, #86efac, #22c55e);
+}
+
+.chart-bar-fill.loss-bar {
+  background: linear-gradient(to right, #fca5a5, #ef4444);
+}
+
+.bar-value {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.soil-quick-status {
+  background-color: white;
+  border-left: 5px solid var(--amber-color);
+  padding: 12px 14px;
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+
+.quick-soil-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-light);
+  text-transform: uppercase;
+}
+
+.soil-quick-recommendation {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-top: 4px;
+}
+
+.soil-dot-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.soil-dot-indicator.deficit {
+  background-color: var(--amber-color);
+}
+
+.soil-dot-indicator.healthy {
+  background-color: var(--profit-color);
+}
+
