@@ -2,7 +2,7 @@
 
 export const translations = {
   en: {
-    appName: "AgriAssist AI",
+    appName: "KishanMitr",
     subtitle: "Smart Farming Assistant",
     languageLabel: "हिन्दी",
     dashboard: "Dashboard",
@@ -168,7 +168,7 @@ export const translations = {
     saveListingBtn: "Publish Listing"
   },
   hi: {
-    appName: "कृषिअसिस्ट AI",
+    appName: "किसानमित्र",
     subtitle: "स्मार्ट किसान सहायक",
     languageLabel: "English",
     dashboard: "डैशबोर्ड",
