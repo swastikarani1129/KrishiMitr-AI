@@ -64,6 +64,44 @@ export const CropIcon = ({ name, size = 32 }) => {
 
 export default function Dashboard({ lang, onViewCrop, onNavigate }) {
   const [weather, setWeather] = React.useState('sunny'); // Simulated weather state
+  const [location, setLocation] = React.useState('Karnal, Haryana'); // Geolocation state
+
+  React.useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          
+          // Request reverse-geocoding from OpenStreetMap's Nominatim (CORS-friendly, free)
+          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12`, {
+            headers: {
+              'Accept-Language': lang === 'hi' ? 'hi' : 'en'
+            }
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (data && data.address) {
+                const address = data.address;
+                const city = address.city || address.town || address.village || address.suburb || address.county || 'Local Area';
+                const state = address.state || '';
+                setLocation(state ? `${city}, ${state}` : city);
+              } else {
+                setLocation(`${latitude.toFixed(2)}°N, ${longitude.toFixed(2)}°E`);
+              }
+            })
+            .catch(() => {
+              // Fallback to coordinates
+              setLocation(`${latitude.toFixed(2)}°N, ${longitude.toFixed(2)}°E`);
+            });
+        },
+        (error) => {
+          console.warn("Geolocation permission denied or error:", error);
+          // Keep default 'Karnal, Haryana'
+        }
+      );
+    }
+  }, [lang]);
+
   const crops = db.getCropSeasons();
   const reminders = db.getReminders();
   const soilTests = db.getSoilTests();
@@ -120,7 +158,7 @@ export default function Dashboard({ lang, onViewCrop, onNavigate }) {
       {/* Weather Update Card */}
       <div className="weather-widget-card" onClick={() => setWeather(prev => prev === 'sunny' ? 'rainy' : 'sunny')} title="Tap to Toggle weather simulator" style={{ cursor: 'pointer' }}>
         <div className="weather-left">
-          <div className="weather-loc">📍 Karnal, Haryana (Tap to Switch)</div>
+          <div className="weather-loc">📍 {location} (Tap to Switch)</div>
           <div className="weather-temp-row">
             <span className="weather-temp">{weather === 'sunny' ? '32°C' : '24°C'}</span>
             <span className="weather-cond">{weather === 'sunny' ? getTranslation(lang, 'sunny') : getTranslation(lang, 'rainy')}</span>
