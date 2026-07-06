@@ -1,0 +1,16 @@
+/* Resetting default Vite template styles */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #cbd5e1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
