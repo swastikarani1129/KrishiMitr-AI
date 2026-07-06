@@ -59,6 +59,7 @@ export default function DiseaseIdentifier({ lang, showToast }) {
   const pastScans = db.getAllDiseaseHistory().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   const [selectedFile, setSelectedFile] = useState(null);
+  const [rawFile, setRawFile] = useState(null); // Save raw file object for Base64 conversion
   const [selectedPreset, setSelectedPreset] = useState(null);
   const [isScanning, setIsScanning] = useState(false);
   const [diagnosisResult, setDiagnosisResult] = useState(null);
@@ -69,6 +70,7 @@ export default function DiseaseIdentifier({ lang, showToast }) {
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      setRawFile(file);
       setSelectedFile(URL.createObjectURL(file));
       setSelectedPreset(null);
       setDiagnosisResult(null);
@@ -81,8 +83,8 @@ export default function DiseaseIdentifier({ lang, showToast }) {
     setDiagnosisResult(null);
   };
 
-  // Run mock scanner animation
-  const handleStartScan = () => {
+  // Run AI Vision scanner
+  const handleStartScan = async () => {
     if (!selectedPreset && !selectedFile) {
       alert('Please upload a leaf photo or select a test leaf first.');
       return;
@@ -90,18 +92,59 @@ export default function DiseaseIdentifier({ lang, showToast }) {
     
     setIsScanning(true);
     
-    setTimeout(() => {
-      setIsScanning(false);
-      // If a preset was selected, show its diagnostic data
-      if (selectedPreset) {
+    if (selectedPreset) {
+      // Fast path for preset leaf samples
+      setTimeout(() => {
+        setIsScanning(false);
         setDiagnosisResult(selectedPreset);
-      } else {
-        // Fallback for custom file upload: simulate random disease
+      }, 1500);
+    } else if (rawFile) {
+      // Process custom file upload using Genkit AI Vision flow
+      const reader = new FileReader();
+      reader.readAsDataURL(rawFile);
+      reader.onload = async () => {
+        const base64Data = reader.result;
+        try {
+          const response = await fetch('http://localhost:3400/diseaseDiagnosisFlow', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data: { imageBase64: base64Data } })
+          });
+
+          if (response.ok) {
+            const json = await response.json();
+            const result = json.result;
+            if (result) {
+              console.log("Leaf diagnosed successfully via Genkit Vision:", result);
+              setIsScanning(false);
+              setDiagnosisResult({
+                id: 'custom_scan',
+                diseaseName: result.diseaseName,
+                confidence: result.confidence,
+                symptoms: result.symptoms,
+                treatment: result.treatment,
+                prevention: result.prevention,
+                color: result.diseaseName.toLowerCase().includes('healthy') ? '#15803d' : '#dc3545',
+                bgClass: 'custom-leaf-preset'
+              });
+              return;
+            }
+          }
+        } catch (err) {
+          console.warn("KishanMitr Genkit server offline. Simulating vision diagnosis.");
+        }
+
+        // Offline simulated fallback
+        setIsScanning(false);
         const randomIndex = 1 + Math.floor(Math.random() * (PRESETS.length - 1));
-        const result = { ...PRESETS[randomIndex], diseaseName: PRESETS[randomIndex].diseaseName + ' (Simulated)' };
-        setDiagnosisResult(result);
-      }
-    }, 3000);
+        setDiagnosisResult({
+          ...PRESETS[randomIndex],
+          diseaseName: PRESETS[randomIndex].diseaseName + ' (Simulated)'
+        });
+      };
+    }
   };
 
   const handleSaveToHistory = () => {

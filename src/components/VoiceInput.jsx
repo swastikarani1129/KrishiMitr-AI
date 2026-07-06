@@ -61,9 +61,9 @@ export default function VoiceInput({ lang, onBack, showToast }) {
   }, [lang]);
 
   // Parse text using our voice parser
-  const handleParse = (text) => {
+  const handleParse = async (text) => {
     if (!text) return;
-    const parsed = parseVoiceInput(text, activeCrops);
+    const parsed = await parseVoiceInput(text, activeCrops);
     setParsedData(parsed);
   };
 
