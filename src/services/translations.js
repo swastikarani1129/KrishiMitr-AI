@@ -165,7 +165,16 @@ export const translations = {
     priceLabel: "Price (₹ per Quintal)",
     phoneLabel: "Phone Number",
     descLabel: "Crop Quality Details",
-    saveListingBtn: "Publish Listing"
+    saveListingBtn: "Publish Listing",
+    weatherUpdate: "Weather Update",
+    weatherAdvice: "Agricultural Weather Advice",
+    humidity: "Humidity",
+    wind: "Wind",
+    sunny: "Sunny",
+    rainy: "Heavy Rain expected",
+    cloudy: "Cloudy",
+    weatherTipSunny: "Sunny today. Ideal for fertilizer spraying and field plowing.",
+    weatherTipRainy: "Heavy Rain forecasted tomorrow. Delay irrigation to save water!"
   },
   hi: {
     appName: "किसानमित्र",
@@ -331,7 +340,16 @@ export const translations = {
     priceLabel: "मूल्य (₹ प्रति क्विंटल)",
     phoneLabel: "मोबाइल नंबर",
     descLabel: "फसल की गुणवत्ता व विवरण",
-    saveListingBtn: "विज्ञापन प्रकाशित करें"
+    saveListingBtn: "विज्ञापन प्रकाशित करें",
+    weatherUpdate: "मौसम की जानकारी",
+    weatherAdvice: "कृषि मौसम सलाह",
+    humidity: "नमी (आर्द्रता)",
+    wind: "हवा",
+    sunny: "धूप (साफ मौसम)",
+    rainy: "भारी बारिश की संभावना",
+    cloudy: "बादल छाए रहेंगे",
+    weatherTipSunny: "आज धूप खिली है। खाद छिड़कने या सिंचाई के लिए सही समय है।",
+    weatherTipRainy: "कल भारी बारिश की संभावना है। कृपया सिंचाई और दवा छिड़काव टालें!"
   }
 };
 

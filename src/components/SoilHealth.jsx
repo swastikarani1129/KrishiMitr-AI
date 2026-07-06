@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getTranslation } from '../services/translations';
 import { db } from '../services/db';
+import soilTextureImg from '../assets/soil_texture.png';
 
 export default function SoilHealth({ lang, showToast }) {
   const tests = db.getSoilTests().sort((a, b) => new Date(b.test_date) - new Date(a.test_date));
@@ -136,6 +137,11 @@ export default function SoilHealth({ lang, showToast }) {
             <div className="retest-status-badge">
               Next: {new Date(activeTest.next_test_date).toLocaleDateString(lang === 'hi' ? 'hi-IN' : 'en-IN')}
             </div>
+          </div>
+
+          {/* Soil Image Banner */}
+          <div className="soil-image-banner-card card">
+            <img src={soilTextureImg} alt="Soil Texture" className="soil-texture-img" />
           </div>
 
           {/* pH and Nutrients Dials */}

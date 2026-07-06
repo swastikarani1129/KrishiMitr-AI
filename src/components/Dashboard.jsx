@@ -63,6 +63,7 @@ export const CropIcon = ({ name, size = 32 }) => {
 };
 
 export default function Dashboard({ lang, onViewCrop, onNavigate }) {
+  const [weather, setWeather] = React.useState('sunny'); // Simulated weather state
   const crops = db.getCropSeasons();
   const reminders = db.getReminders();
   const soilTests = db.getSoilTests();
@@ -116,6 +117,46 @@ export default function Dashboard({ lang, onViewCrop, onNavigate }) {
 
   return (
     <div className="dashboard-view animate-fade-in">
+      {/* Weather Update Card */}
+      <div className="weather-widget-card" onClick={() => setWeather(prev => prev === 'sunny' ? 'rainy' : 'sunny')} title="Tap to Toggle weather simulator" style={{ cursor: 'pointer' }}>
+        <div className="weather-left">
+          <div className="weather-loc">📍 Karnal, Haryana (Tap to Switch)</div>
+          <div className="weather-temp-row">
+            <span className="weather-temp">{weather === 'sunny' ? '32°C' : '24°C'}</span>
+            <span className="weather-cond">{weather === 'sunny' ? getTranslation(lang, 'sunny') : getTranslation(lang, 'rainy')}</span>
+          </div>
+          <div className="weather-stats">
+            <span>💧 {getTranslation(lang, 'humidity')}: {weather === 'sunny' ? '45%' : '88%'}</span>
+            <span>💨 {getTranslation(lang, 'wind')}: {weather === 'sunny' ? '12 km/h' : '25 km/h'}</span>
+          </div>
+        </div>
+        <div className="weather-right-icon">
+          {weather === 'sunny' ? '☀️' : '🌧️'}
+        </div>
+        
+        {/* 3-day forecast details */}
+        <div className="weather-forecast-row">
+          <div className="forecast-item">
+            <span className="forecast-day">Today</span>
+            <span>{weather === 'sunny' ? '☀️' : '🌧️'} {weather === 'sunny' ? '32°' : '24°'}</span>
+          </div>
+          <div className="forecast-item">
+            <span className="forecast-day">Tomorrow</span>
+            <span>{weather === 'sunny' ? '⛅' : '🌦️'} {weather === 'sunny' ? '29°' : '26°'}</span>
+          </div>
+          <div className="forecast-item">
+            <span className="forecast-day">Day After</span>
+            <span>☀️ {weather === 'sunny' ? '31°' : '30°'}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Agricultural Advice banner based on weather */}
+      <div className="weather-advice-banner">
+        <span>💡</span>
+        <span>{weather === 'sunny' ? getTranslation(lang, 'weatherTipSunny') : getTranslation(lang, 'weatherTipRainy')}</span>
+      </div>
+
       {/* 1. Active Reminders Ticker alert */}
       {pendingReminders.length > 0 && (
         <div 

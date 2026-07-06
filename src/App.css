@@ -2441,3 +2441,124 @@ body {
   background-color: var(--profit-color);
 }
 
+/* Soil Image Banner Card */
+.soil-image-banner-card {
+  padding: 0 !important;
+  overflow: hidden;
+  height: 150px;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.soil-texture-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Weather Widget Card */
+.weather-widget-card {
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: white;
+  padding: 16px 20px;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.weather-widget-card:active {
+  transform: scale(0.98);
+}
+
+.weather-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 2;
+}
+
+.weather-loc {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.weather-temp-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.weather-temp {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.weather-cond {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.weather-stats {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.weather-right-icon {
+  font-size: 42px;
+  z-index: 2;
+}
+
+.weather-advice-banner {
+  background-color: #fffbeb;
+  border: 1px solid #fef3c7;
+  color: #b45309;
+  padding: 10px 14px;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+.weather-forecast-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  padding-top: 10px;
+  width: 100%;
+  z-index: 2;
+}
+
+.forecast-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.forecast-day {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 10px;
+  margin-bottom: 2px;
+}
+
