@@ -3,6 +3,8 @@
 > **Your AI-Powered Smart Farming Companion**
 
 KrishiMitra AI is an **offline-first, AI-powered smart farming platform** designed to help farmers make informed decisions throughout the farming lifecycle. It combines financial management, crop disease detection, soil health tracking, marketplace access, and AI assistance into one easy-to-use application.
+<img width="1504" height="1006" alt="Screenshot_7-7-2026_113228_localhost" src="https://github.com/user-attachments/assets/3bf6c3c8-7a6c-4e79-941c-6a797bf8d107" />
+
 
 ## 🎯 Mission
 
