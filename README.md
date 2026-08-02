@@ -36,7 +36,7 @@ Empower farmers with accessible AI technology to improve productivity, profitabi
 * **AI:** Google Gemini API + Genkit
 * **Voice:** Web Speech API
 * **Offline:** PWA + Dexie.js (IndexedDB)
-* **Deployment:** Locally http://localhost:5173/
+* **Deployment:** Vercel krishi-mitr-ai-xi.vercel.app
 
 
 ## 📖 Why "KrishiMitra AI"?
